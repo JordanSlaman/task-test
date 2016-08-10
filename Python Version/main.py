@@ -1,11 +1,3 @@
-""" Todo:
-        - Upon calling complete() on a task, set _value of that task object to the number of occurrences of the
-            string "CCN" (case in-sensitive) that appears in the task's name.
-
-        - Fix other bugs and make improvements where you see fit
-        - Add error handling where you see fit
-"""
-
 import hashlib, datetime
 from task_manager import  Task, TaskManager
 
@@ -21,18 +13,22 @@ class CustomTaskManager(TaskManager):
 
     def import_task(self,task):
         self._tasks[self.generate_key(task)] = task
+        print('task {name} created'.format(name=task.name))
 
     def complete_tasks(self):
         for task in self._tasks.items():
             if not task[1].is_completed:
                 task[1].complete()
-                print('task {name} completed'.format(name=task[1].name))
+                print('task {name} completed, ccn: {value}'.format(name=task[1].name,value=task[1].value))
 
     def remove_task(self,key):
+        tmp_name = self._tasks[key].name
         del self._tasks[key]
+        print('task {name} removed'.format(name=tmp_name))
 
     def remove_tasks(self):
         self._tasks.clear()
+        print('all tasks removed')
 
     def lookup_tasks(self,name):
         results_subset = dict()
@@ -42,8 +38,8 @@ class CustomTaskManager(TaskManager):
         return results_subset
 
     def killall(self, name):
-        for t in self.lookup_tasks(name).items():
-            self.remove_task(t[0])
+        for task in self.lookup_tasks(name).items():
+            self.remove_task(task[0])
 
 class CustomTask(Task):
 
@@ -54,7 +50,8 @@ class CustomTask(Task):
         self._completed = False
 
     def complete(self):
-        _completed = True
+        self._completed = True
+        self._value = self.name.lower().count('ccn')
 
     @property
     def created(self):
@@ -72,7 +69,7 @@ if __name__ == "__main__":
 
     task_manager.complete_tasks()
 
-    #invokes the remove_task method by name as opposed to it's key.
+    #invokes the remove_task method by name as opposed to it's key (which is time-sensitive to avoid conflict)
     task_manager.killall('g}~x?C*n9K|LccN_YEL@<=44jkc.dB-v{!#;7*[[')
 
     task_manager.import_task(CustomTask('>.`8tCcn{xsS3sa!G@{cCn(w},U+s)**sACc]NAn#'))
