@@ -17,7 +17,7 @@ We are looking forward to see your solution.
 
 I have chosen to work on the Python implementation.
 
-## ID's
+### ID's
 I've decided that it would be best to store the tasks as a dict, as it would make it much easier to track reference them by ID than by array position. In this implementation a task would not need to know it's ID, which I feel believe makes for better encapsulation - Unfortunately it results in overwriting all of the methods in the original Task Manager.
 
 It's possible that multiple tasks would be created with the same name, so in order to avoid collisions I assigned the keys by hashing both the name and the timestamp of creation concatenated. Theoretically there could still be collisions, but that can be fixed/optimized with some error checking code, a larger hash digest and/or a finer time granularity.
