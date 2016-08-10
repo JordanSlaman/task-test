@@ -10,3 +10,9 @@ When doing this test, please fork our repository and then send us a link to bran
 Good luck!
 
 We are looking forward to see your solution.
+
+---
+
+# Jordan's Solution
+
+I have chosen to work on the Python implementation.

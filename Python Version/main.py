@@ -1,6 +1,4 @@
 """ Todo:
-        - Alter the complete_tasks method so that it only calls 'complete' on
-            non-completed task.
         - Add a remove_task method that removes only one task by id
 
         - Upon calling complete() on a task, set _value of that task object to the number of occurrences of the
@@ -18,6 +16,17 @@
 """
 
 from task_manager import  Task, TaskManager
+
+class CustomTaskManager(TaskManager):
+
+    def complete_tasks(self):
+        if len(self._tasks) > 0:
+            if not all([task.is_completed for task in self._tasks]):
+                for task in self._tasks:
+                    if not task.is_completed:
+                        task.complete()
+                        print('task {name} completed'.format(name=task.name))
+
 
 if __name__ == "__main__":
     task_manager = TaskManager()
